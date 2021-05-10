@@ -1,0 +1,6 @@
+[submodule "external/pugixml"]
+	path = external/pugixml
+	url = https://github.com/zeux/pugixml.git
+[submodule "external/ziplib"]
+	path = external/ziplib
+	url = https://bitbucket.org/wbenny/ziplib.git
