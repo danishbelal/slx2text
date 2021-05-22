@@ -88,3 +88,19 @@ std::string FindRelTargetById(const std::unordered_map<std::string, std::string>
         throw std::runtime_error("Cannot find relationship with id " + Id);
     }
 }
+
+void DumpXmlFile(std::ostream& os, ZipArchiveEntry::Ptr File)
+{
+    // Parse the file and then dump the DOM - this ensures proper xml formatting.
+    auto Stream = File->GetDecompressionStream();
+    pugi::xml_document doc;
+    pugi::xml_parse_result Result = doc.load(*Stream);
+    if (Result.status != pugi::status_ok)
+    {
+        throw std::runtime_error("Failed to parse file " + File->GetFullName());
+    }
+
+    // Dump to std::ostream
+    doc.save(os);
+    os << '\n';
+}

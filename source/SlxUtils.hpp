@@ -28,4 +28,8 @@ std::unordered_map<std::string, std::string> FindRelTargets(ZipArchive::Ptr ZipF
 /// the corresponding target.
 std::string FindRelTargetById(const std::unordered_map<std::string, std::string>& RelTargetIdMap, const std::string Id);
 
+/// Dumps the given XML file to os.  This ensures proper xml formatting, by parsing
+/// the document and then dumping the dom.
+void DumpXmlFile(std::ostream& os, ZipArchiveEntry::Ptr File);
+
 #endif

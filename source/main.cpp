@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 
         auto Target = FindRelTargetById(Targets, "blockDiagram");
         auto File = Model->GetEntry(Target);
-        std::cout << File->GetDecompressionStream()->rdbuf() << std::endl;
+        DumpXmlFile(std::cout, File);
 
         IC(Targets);
     }
