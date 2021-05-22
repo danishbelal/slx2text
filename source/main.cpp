@@ -20,13 +20,13 @@ int main(int argc, char** argv)
     try
     {
         IC(InferVersion(Model));
-        auto Targets = FindRelTargets(Model);
+        auto TargetSet = FindRelTargets(Model);
 
-        auto Target = FindRelTargetById(Targets, "blockDiagram");
+        auto Target = FindRelTargetById(TargetSet, "blockDiagram");
         auto File = Model->GetEntry(Target);
         DumpXmlFile(std::cout, File);
 
-        IC(Targets);
+        IC(TargetSet);
     }
     catch (const std::exception& e)
     {
