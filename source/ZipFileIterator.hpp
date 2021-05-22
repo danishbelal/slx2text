@@ -7,11 +7,11 @@
 
 class ZipFileIterator
 {
-    std::string mZipFilename;
     ZipArchive::Ptr mZipFile;
 
 public:
     ZipFileIterator(const std::string& ZipFile);
+    ZipFileIterator(ZipArchive::Ptr ZipFile);
 
     class Iterator
     {

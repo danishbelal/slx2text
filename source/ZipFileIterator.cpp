@@ -5,6 +5,11 @@ ZipFileIterator::ZipFileIterator(const std::string& ZipFile)
 {
 }
 
+ZipFileIterator::ZipFileIterator(ZipArchive::Ptr ZipFile)
+    : mZipFile(ZipFile)
+{
+}
+
 ZipFileIterator::Iterator::Iterator(std::size_t Idx, ZipArchive::Ptr ZipFile)
     : mCurrentIdx(Idx)
     , mZipFile(ZipFile)
