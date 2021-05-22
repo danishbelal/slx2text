@@ -1,10 +1,8 @@
 # Main Program
 
 set(DemoSources "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp"
-                "${CMAKE_CURRENT_SOURCE_DIR}/DumpAllFiles.cpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/ZipFileIterator.hpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/ZipFileIterator.cpp"
-                "${CMAKE_CURRENT_SOURCE_DIR}/playground.cpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/ZipUtils.cpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/ZipUtils.hpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/SlxUtils.cpp"
