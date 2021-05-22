@@ -7,7 +7,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# External Dependencies: pugixml, tomlplusplus, ZipLib and threads
 add_subdirectory(external/pugixml)
+add_subdirectory(external/tomlplusplus)
 find_package(Threads REQUIRED)
 include(ZipLibTarget)
 
