@@ -24,4 +24,8 @@ pugi::xml_document ParseXmlFile(ZipArchiveEntry::Ptr File);
 /// The map value is the relationship target.
 std::unordered_map<std::string, std::string> FindRelTargets(ZipArchive::Ptr ZipFile);
 
+/// Searched the (id, target) relationship map for the given Id and returns
+/// the corresponding target.
+std::string FindRelTargetById(const std::unordered_map<std::string, std::string>& RelTargetIdMap, const std::string Id);
+
 #endif

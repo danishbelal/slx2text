@@ -38,7 +38,6 @@ std::string InferVersion(ZipArchive::Ptr ModelFile)
     else
     {
         throw std::runtime_error("ambigous release (or none)");
-        // todo: log warning or something
     }
 }
 
@@ -74,4 +73,18 @@ std::unordered_map<std::string, std::string> FindRelTargets(ZipArchive::Ptr ZipF
         }
     });
     return RelTargets;
+}
+
+std::string FindRelTargetById(const std::unordered_map<std::string, std::string>& RelTargetIdMap, const std::string Id)
+{
+    auto Element = RelTargetIdMap.find(Id);
+    if (Element != RelTargetIdMap.end())
+    {
+        auto [Id, Target] = *Element;
+        return Target;
+    }
+    else
+    {
+        throw std::runtime_error("Cannot find relationship with id " + Id);
+    }
 }

@@ -22,13 +22,9 @@ int main(int argc, char** argv)
         IC(InferVersion(Model));
         auto Targets = FindRelTargets(Model);
 
-        auto blockDiagram = Targets.find("blockDiagram");
-        if (blockDiagram != Targets.end())
-        {
-            auto [Id, Target] = *blockDiagram;
-            auto File = Model->GetEntry(Target);
-            std::cout << File->GetDecompressionStream()->rdbuf() << std::endl;
-        }
+        auto Target = FindRelTargetById(Targets, "blockDiagram");
+        auto File = Model->GetEntry(Target);
+        std::cout << File->GetDecompressionStream()->rdbuf() << std::endl;
 
         IC(Targets);
     }
