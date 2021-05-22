@@ -9,4 +9,4 @@ set(DemoSources "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/SlxUtils.hpp")
 
 add_executable(Demo "${DemoSources}")
-target_link_libraries(Demo PUBLIC ZipLib pugixml::pugixml Threads::Threads)
+target_link_libraries(Demo PUBLIC ZipLib pugixml::pugixml Threads::Threads tomlplusplus::tomlplusplus)
