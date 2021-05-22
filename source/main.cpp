@@ -3,7 +3,8 @@
 
 #include "icecream.hpp"
 
-void DumpAllFiles(const std::string ModelFile);
+#include "SlxUtils.hpp"
+#include "ZipUtils.hpp"
 
 int main(int argc, char** argv)
 {
@@ -14,10 +15,28 @@ int main(int argc, char** argv)
         return -1;
     }
     auto ModelFilename = argv[1];
-    DumpAllFiles(ModelFilename);
+    ZipArchive::Ptr Model = ZipFile::Open(ModelFilename);
 
-    //void playground(const std::string ModelFile);
-    //playground(ModelFilename);
+    try
+    {
+        IC(InferVersion(Model));
+        auto Targets = FindRelTargets(Model);
+
+        auto blockDiagram = Targets.find("blockDiagram");
+        if (blockDiagram != Targets.end())
+        {
+            auto [Id, Target] = *blockDiagram;
+            auto File = Model->GetEntry(Target);
+            std::cout << File->GetDecompressionStream()->rdbuf() << std::endl;
+        }
+
+        IC(Targets);
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return -1;
+    }
 
     return 0;
 }
