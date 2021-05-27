@@ -7,7 +7,7 @@
 #include "SlxUtils.hpp"
 #include "ZipUtils.hpp"
 
-#include <toml++/toml.h>
+#include "ConfigReader.hpp"
 
 int main(int argc, char** argv)
 {
@@ -19,46 +19,21 @@ int main(int argc, char** argv)
     }
     auto ModelFilename = argv[1];
     ZipArchive::Ptr Model = ZipFile::Open(ModelFilename);
-
-    // Does the config file exist?
-    std::filesystem::path ConfigFilePath("slx2text-config.toml");
-    if (!std::filesystem::exists(ConfigFilePath))
+    if (Model == nullptr)
     {
-        std::cerr << "Cannot find config file" << std::endl;
+        std::cerr << "Cannot open " << ModelFilename << std::endl;
         return -1;
     }
 
-    // Read config
-    toml::table Config;
-    try
-    {
-        std::ifstream ConfigFileInputStream(ConfigFilePath);
-        Config = toml::parse(ConfigFileInputStream);
-    }
-    catch (const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-
-    // Extract list of relationship ids to be printed
     std::set<std::string> ShowIds;
     try
     {
-        toml::array* RelIdList = Config["ids"].as_array();
-        for (toml::node& Id : *RelIdList)
-        {
-            Id.visit([&](auto&& e) {
-                if constexpr (toml::is_string<decltype(e)>)
-                {
-                    auto v = Id.value<std::string>().value();
-                    ShowIds.emplace(v);
-                }
-            });
-        }
+        ShowIds = GetIdsToShow();
     }
     catch (const std::exception& e)
     {
         std::cerr << e.what() << '\n';
+        return -1;
     }
 
     try
