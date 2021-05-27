@@ -19,12 +19,16 @@ std::set<ZipArchiveEntry::Ptr> FindFilesFilterPath(ZipArchive::Ptr ZipFile, cons
     return FoundFiles;
 }
 
-std::set<ZipArchiveEntry::Ptr> FindFiles(ZipArchive::Ptr ZipFile, const std::regex FilenameSelector)
+std::set<ZipArchiveEntry::Ptr> FindFiles(ZipArchive::Ptr ZipFile, const std::string FilenameSelector)
 {
     // Only consider Filename (i.e. ignore preceding path).
     auto Filter = [](const std::string FullPath) -> std::string {
         return std::filesystem::path(FullPath).filename().string();
     };
 
-    return FindFilesFilterPath(ZipFile, FilenameSelector, Filter);
+    // remove possibly preceding path
+    std::filesystem::path Path(FilenameSelector);
+    auto Selector = Path.filename().string();
+
+    return FindFilesFilterPath(ZipFile, std::regex(Selector), Filter);
 }

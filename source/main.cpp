@@ -45,7 +45,16 @@ int main(int argc, char** argv)
         for (auto Id : ShowIds)
         {
             auto Target = FindRelTargetById(TargetSet, Id);
-            auto File = Model->GetEntry(Target);
+            auto MatchingFiles = FindFiles(Model, Target);
+            IC(MatchingFiles);
+            if (MatchingFiles.size() != 1)
+            {
+                std::cerr << Target << " either not found or ambigous." << std::endl;
+                return -1;
+                // continue;
+            }
+            // Retrieve the first (and only) entry.
+            auto File = *MatchingFiles.begin();
             if (File == nullptr)
             {
                 std::cerr << "Failed to open " << Target << std::endl;
