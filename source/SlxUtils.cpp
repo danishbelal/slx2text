@@ -46,12 +46,19 @@ std::set<ZipArchiveEntry::Ptr> FindRelationships(ZipArchive::Ptr ZipFile)
     return FindFiles(ZipFile, ".*.rels");
 }
 
+// Needs to be unified with DumpXmlFile  (todo)
 pugi::xml_document ParseXmlFile(ZipArchiveEntry::Ptr File)
 {
     pugi::xml_document doc;
 
     auto FileStream = File->GetDecompressionStream();
-    doc.load(*FileStream);
+    auto Status = doc.load(*FileStream);
+    if (Status.status != pugi::status_ok)
+    {
+        std::ostringstream os;
+        os << "Cannot parse " << File->GetFullName();
+        throw std::runtime_error(os.str());
+    }
 
     return doc;
 }

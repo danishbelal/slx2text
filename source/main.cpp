@@ -11,6 +11,7 @@
 
 int main(int argc, char** argv)
 {
+    int SoftErrorOccurred = 0;
     if (argc < 2)
     {
         std::cerr << "Usage: " << '\n'
@@ -45,6 +46,13 @@ int main(int argc, char** argv)
         {
             auto Target = FindRelTargetById(TargetSet, Id);
             auto File = Model->GetEntry(Target);
+            if (File == nullptr)
+            {
+                std::cerr << "Failed to open " << Target << std::endl;
+                SoftErrorOccurred = -1;
+                //continue;
+                return SoftErrorOccurred;
+            }
             DumpXmlFile(std::cout, File);
         }
     }
@@ -54,5 +62,5 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    return 0;
+    return SoftErrorOccurred;
 }
